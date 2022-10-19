@@ -1,0 +1,12 @@
+{
+    "project_name": "Poetry Project",
+    "package_name": "{{cookiecutter.project_name.lower().replace(' ', '_').replace('-', '_')}}",
+    "author_name": "",
+    "github_username": "",
+    "project_url": "https://github.com/{{cookiecutter.github_username}}/{{cookiecutter.package_name}}",
+    "poetry_dependencies": "",
+    "poetry_dev_dependencies": "",
+    "line_length": "100",
+    "license": "MIT",
+    "_copy_without_render": [".github/workflows"]
+}

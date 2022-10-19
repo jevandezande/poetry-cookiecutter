@@ -1,0 +1,6 @@
+default_context:
+    author_name: ""
+    email: ""
+    github_username: ""
+abbreviations:
+    bb: https://bitbucket.org/{0}

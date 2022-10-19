@@ -1,0 +1,41 @@
+[tool.poetry]
+name = "poetry_cookiecutter"
+description = "Cookiecutter for setting up python projects with poetry that just work"
+authors = ["Jonathon Vandezande"]
+license = "MIT"
+readme = "README.md"
+version = "0.1.0"
+keywords = ["cookiecutter", "poetry"]
+repository = "https://github.com/jevandezande/poetry-cookiecutter"
+
+[tool.poetry.dependencies]
+python = ">=3.10"
+cookiecutter = "*"
+
+[tool.poetry.group.dev.dependencies]
+black = "==22.10"
+flake8 = "*"
+isort = "*"
+mypy = "*"
+pre-commit = "*"
+
+[tool.poetry.group.test.dependencies]
+pytest = "*"
+pytest-cov = "*"
+
+[tool.black]
+line-length = 100
+target-version = ["py310"]
+
+[tool.isort]
+profile = "black"
+line_length = 100
+
+[tool.mypy]
+files = ["hooks"]
+strict = true
+pretty = true
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

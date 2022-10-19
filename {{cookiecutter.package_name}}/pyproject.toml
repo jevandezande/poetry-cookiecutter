@@ -1,0 +1,50 @@
+[tool.poetry]
+name = "{{cookiecutter.package_name}}"
+version = "0.1.0"
+description = "{{cookiecutter.project_name}}"
+authors = ["{{cookiecutter.author_name}}"]
+keywords = []
+license = "{{cookiecutter.license}}"
+readme = "README.md"
+repository = "{{cookiecutter.project_url}}"
+
+[tool.poetry.dependencies]
+python = "^{python_version}"
+{poetry_dependencies}
+
+[tool.poetry.group.dev.dependencies]
+black = "==22.10"
+flake8 = "*"
+isort = "*"
+mypy = "*"
+pre-commit = "*"
+{poetry_dev_dependencies}
+
+[tool.poetry.group.test.dependencies]
+pytest = "*"
+pytest-cov = "*"
+
+[tool.poetry.scripts]
+{{cookiecutter.package_name}} = "{{cookiecutter.package_name}}.{{cookiecutter.package_name}}:fib_print"
+
+[tool.black]
+line-length = {{cookiecutter.line_length}}
+target-version = ["py310"]
+
+[tool.isort]
+profile = "black"
+line_length = 100
+
+[tool.mypy]
+files = ["{{cookiecutter.package_name}}", "tests"]
+strict = true
+pretty = true
+
+[tool.pytest]
+testpaths = ["tests"]
+addopts = "--doctest-modules"
+doctest_optionflags = "NORMALIZE_WHITESPACE"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
