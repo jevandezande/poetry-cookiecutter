@@ -19,12 +19,13 @@ def call(*inputs: str) -> None:
     Warning: strings with spaces are not yet supported.
     """
     for input in inputs:
-        logger.debug(input)
+        logger.debug(f"Calling: {input}")
         check_call(input.split())
 
 
 def set_python_version() -> None:
     python_version = f"{sys.version_info.major}.{sys.version_info.minor}"
+    logger.info(f"Settting {python_version=}")
     if sys.version_info.minor < 9:
         logger.warn(f"{python_version=} should be upgraded to the latest avaiable python version.")
 
@@ -43,6 +44,7 @@ def set_python_version() -> None:
 
 def set_license(license: Optional[str] = "MIT") -> None:
     if not license:
+        logger.debug("No license set")
         return
 
     license = license.lower()
@@ -57,6 +59,8 @@ def set_license(license: Optional[str] = "MIT") -> None:
         contents = contents.replace("{author_name}", "{{cookiecutter.author_name}}")
     with open("LICENSE", "w") as f:
         f.write(contents)
+
+    logger.debug("Set {license=}")
 
 
 def remove_license_dir() -> None:
