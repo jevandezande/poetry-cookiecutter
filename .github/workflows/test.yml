@@ -40,4 +40,4 @@ jobs:
           git config --global user.name "Default Name"
 
       - name: Run cookiecutter
-        run: poetry run cookiecutter . --no-input
+        run: poetry run cookiecutter . --no-input --config-file template_config.yml

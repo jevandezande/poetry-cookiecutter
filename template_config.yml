@@ -1,5 +1,5 @@
 default_context:
-    author_name: ""
+    author_name: "John Smith"
     email: ""
     github_username: ""
 abbreviations:
