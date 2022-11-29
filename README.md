@@ -3,18 +3,18 @@
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 [![GitHub Workflow Status](https://img.shields.io/github/workflow/status/jevandezande/poetry-cookiecutter/Test%20Setup)](https://github.com/jevandezande/poetry-cookiecutter/actions/)
 
-[Cookiecutter](https://github.com/audreyr/cookiecutter) for setting up poetry projects with all of the below features.
+[Cookiecutter](https://github.com/audreyr/cookiecutter) for setting up [poetry](https://python-poetry.org/) projects with all of the below features.
 
 ## Features
 - Packaging with [poetry](https://python-poetry.org/)
-- Formatting with [black](https://github.com/psf/black)
-- Import sorting with [isort](https://github.com/timothycrosley/isort)
+- Formatting with [black](https://black.readthedocs.io/en/stable/)
+- Import sorting with [isort](https://pycqa.github.io/isort/)
 - Linting with [flake8](http://flake8.pycqa.org/en/latest/)
 - Static typing with [mypy](http://mypy-lang.org/)
 - Testing with [pytest](https://docs.pytest.org/en/latest/)
 - Git hooks that run all the above with [pre-commit](https://pre-commit.com/)
 - Continuous Integration with [GitHub Actions](https://github.com/features/actions)
-- Code coverage with [Codecov](https://codecov.io)
+- Code coverage with [Codecov](https://docs.codecov.com/docs)
 
 
 ## Setup
@@ -32,7 +32,6 @@ pipx install poetry cookiecutter
 pipx run cookiecutter gh:jevandezande/poetry-cookiecutter
 ```
 
-
 The cookiecutter will automagically
 - Generate a project with the input configuration
 - Initialise git
@@ -42,5 +41,8 @@ The cookiecutter will automagically
 
 
 ## Recommendations
-Make a `cookiecutter.yml` configuration file (see `template_config.yml`) with
-your default settings and use it with the flag `--config-file cookiecutter.yml`
+Make a config file (see [template_config.yml](template_config.yml)) with
+default settings and save it as a `.cookiecutterrc` or use it directly via:
+`--config-file cookiecutter.yml`
+
+Install [act](https://github.com/nektos/act) to run GitHub Actions locally.
