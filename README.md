@@ -1,7 +1,7 @@
 # Poetry Cookiecutter
 [![License](https://img.shields.io/github/license/jevandezande/poetry-cookiecutter)](https://github.com/jevandezande/poetry-cookiecutter/blob/master/LICENSE)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
-[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/jevandezande/poetry-cookiecutter/Test%20Setup)](https://github.com/jevandezande/poetry-cookiecutter/actions/)
+[![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/jevandezande/poetry-cookiecutter/test.yml?branch=master)](https://github.com/jevandezande/poetry-cookiecutter/actions/)
 
 [Cookiecutter](https://github.com/audreyr/cookiecutter) for setting up [poetry](https://python-poetry.org/) projects with all of the below features.
 
