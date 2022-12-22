@@ -1,6 +1,5 @@
 [run]
-source = {{cookiecutter.package_name}}
-omit = {{cookiecutter.package_name}}/__main__.py
+source = hooks
 
 [report]
 exclude_lines =
