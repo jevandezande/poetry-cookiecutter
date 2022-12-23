@@ -13,11 +13,10 @@ python = "^{python_version}"
 {poetry_dependencies}
 
 [tool.poetry.group.dev.dependencies]
-black = "==22.10"
-flake8 = "*"
-isort = "*"
+black = "==23.1"
 mypy = "*"
 pre-commit = "*"
+ruff = "*"
 {poetry_dev_dependencies}
 
 [tool.poetry.group.test.dependencies]
@@ -29,11 +28,16 @@ pytest-cov = "*"
 
 [tool.black]
 line-length = {{cookiecutter.line_length}}
-target-version = ["py310"]
+target-version = ["py311"]
 
-[tool.isort]
-profile = "black"
-line_length = {{cookiecutter.line_length}}
+[tool.ruff]
+line-length = {{cookiecutter.line_length}}
+select = [
+    "E",  # pycodestyle errors
+    "W",  # pycodestyle warnings
+    "F",  # pyflakes
+    "I",  # isort
+]
 
 [tool.mypy]
 files = ["{{cookiecutter.package_name}}", "tests"]

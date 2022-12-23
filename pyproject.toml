@@ -4,20 +4,19 @@ description = "Cookiecutter for setting up python projects with poetry that just
 authors = ["Jonathon Vandezande"]
 license = "MIT"
 readme = "README.md"
-version = "0.1.0"
+version = "0.2.0"
 keywords = ["cookiecutter", "poetry"]
 repository = "https://github.com/jevandezande/poetry-cookiecutter"
 
 [tool.poetry.dependencies]
-python = ">=3.10"
+python = ">=3.11"
 cookiecutter = "*"
 
 [tool.poetry.group.dev.dependencies]
-black = "==22.10"
-flake8 = "*"
-isort = "*"
+black = "==23.1"
 mypy = "*"
 pre-commit = "*"
+ruff = "*"
 
 [tool.poetry.group.test.dependencies]
 pytest = "*"
@@ -25,11 +24,16 @@ pytest-cov = "*"
 
 [tool.black]
 line-length = 100
-target-version = ["py310"]
+target-version = ["py311"]
 
-[tool.isort]
-profile = "black"
-line_length = 100
+[tool.ruff]
+line-length = 100
+select = [
+    "E",  # pycodestyle errors
+    "W",  # pycodestyle warnings
+    "F",  # pyflakes
+    "I",  # isort
+]
 
 [tool.mypy]
 files = ["hooks"]

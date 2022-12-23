@@ -32,7 +32,6 @@ def set_python_version() -> None:
     file_names = [
         ".github/workflows/test.yml",
         "pyproject.toml",
-        "setup.cfg",
     ]
 
     for file_name in file_names:

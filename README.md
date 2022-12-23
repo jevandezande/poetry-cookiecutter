@@ -8,8 +8,7 @@
 ## Features
 - Packaging with [poetry](https://python-poetry.org/)
 - Formatting with [black](https://black.readthedocs.io/en/stable/)
-- Import sorting with [isort](https://pycqa.github.io/isort/)
-- Linting with [flake8](http://flake8.pycqa.org/en/latest/)
+- Linting with [ruff](https://github.com/charliermarsh/ruff)
 - Static typing with [mypy](http://mypy-lang.org/)
 - Testing with [pytest](https://docs.pytest.org/en/latest/)
 - Git hooks that run all the above with [pre-commit](https://pre-commit.com/)
