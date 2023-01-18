@@ -7,10 +7,13 @@ from datetime import datetime
 from os import listdir, path
 from shutil import rmtree
 from subprocess import check_call
-from typing import Optional
+from typing import Literal, Optional
 
 logger = logging.Logger("post_gen_project_logger")
 logger.setLevel(logging.INFO)
+
+
+PROTOCOL = Literal["git", "https"]
 
 
 def call(*inputs: str) -> None:
@@ -99,8 +102,12 @@ def git_initial_commit() -> None:
     call("git add .", "git commit -m Setup")
 
 
-def git_add_remote(name: str, location: str) -> None:
-    call(f"git remote add {name} {location}")
+def git_add_remote(name: str, url: str, protocol: PROTOCOL = "git") -> None:
+    if protocol == "git":
+        _, _, hostname, path = url.split("/", 3)
+        url = f"{protocol}@{hostname}:{path}"
+
+    call(f"git remote add {name} {url}")
 
 
 SUCCESS = "\x1b[1;32m"
