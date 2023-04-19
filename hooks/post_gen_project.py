@@ -45,7 +45,7 @@ def set_python_version() -> None:
 
 
 def set_license(license: str | None = "MIT") -> None:
-    if not license:
+    if not license or license == "None":
         logger.debug("No license set")
         return
 
