@@ -7,7 +7,7 @@ from datetime import datetime
 from os import listdir, path
 from shutil import rmtree
 from subprocess import check_call
-from typing import Literal, Optional
+from typing import Literal
 
 logger = logging.Logger("post_gen_project_logger")
 logger.setLevel(logging.INFO)
@@ -44,7 +44,7 @@ def set_python_version() -> None:
             f.write(contents)
 
 
-def set_license(license: Optional[str] = "MIT") -> None:
+def set_license(license: str | None = "MIT") -> None:
     if not license:
         logger.debug("No license set")
         return
