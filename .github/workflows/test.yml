@@ -37,6 +37,7 @@ jobs:
         run: |
           git config --global user.email "default@example.com"
           git config --global user.name "Default Name"
+          git config --global init.defaultBranch master
 
       - name: Run cookiecutter
         run: poetry run cookiecutter . --no-input --config-file template_config.yml
