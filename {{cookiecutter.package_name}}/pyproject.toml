@@ -24,7 +24,6 @@ pytest = "*"
 pytest-cov = "*"
 
 [tool.poetry.scripts]
-{{cookiecutter.package_name}} = "{{cookiecutter.package_name}}.{{cookiecutter.package_name}}:fib_print"
 
 [tool.black]
 line-length = {{cookiecutter.line_length}}
