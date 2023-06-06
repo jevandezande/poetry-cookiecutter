@@ -4,7 +4,7 @@ import logging
 import shutil
 import sys
 from datetime import datetime
-from os import listdir, path
+from pathlib import Path
 from shutil import rmtree
 from subprocess import check_call
 from typing import Literal
@@ -50,7 +50,7 @@ def set_license(license: str | None = "MIT") -> None:
         return
 
     license = license.lower()
-    licenses = list(map(path.basename, listdir("licenses")))  # type: ignore
+    licenses = [lic.name for lic in Path("licenses").iterdir()]
     if license not in licenses:
         raise ValueError(f"{license=} is not available yet. Please select from:\n{licenses=}")
 
@@ -62,7 +62,7 @@ def set_license(license: str | None = "MIT") -> None:
     with open("LICENSE", "w") as f:
         f.write(contents)
 
-    logger.debug("Set {license=}")
+    logger.debug(f"Set {license=}")
 
 
 def remove_license_dir() -> None:
