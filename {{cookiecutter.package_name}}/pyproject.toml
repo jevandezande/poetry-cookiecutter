@@ -13,7 +13,7 @@ python = "^{python_version}"
 {poetry_dependencies}
 
 [tool.poetry.group.dev.dependencies]
-black = "==23.1"
+black = "==23.7"
 mypy = "*"
 pre-commit = "*"
 ruff = "*"
