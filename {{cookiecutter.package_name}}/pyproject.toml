@@ -44,7 +44,7 @@ strict = true
 pretty = true
 
 [tool.pytest.ini_options]
-testpaths = ["tests"]
+testpaths = ["tests", "{{cookiecutter.package_name}}"]
 addopts = "--doctest-modules"
 doctest_optionflags = "NORMALIZE_WHITESPACE"
 
