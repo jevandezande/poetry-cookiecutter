@@ -73,16 +73,50 @@ def git_init() -> None:
     call("git init")
 
 
+def process_dependency(dependency: str) -> str:
+    """
+    >>> process_dependency("pytest")
+    'pytest = "*"'
+    >>> process_dependency("matplotlib@^3.7.2")
+    'matplotlib = "^3.7.2"'
+    """
+    if not dependency:
+        raise ValueError("Blank dependency")
+
+    if len(split := dependency.split("@")) == 1:
+        return f'{dependency} = "*"'
+
+    if len(split) != 2:
+        raise ValueError(f"Unable to process {dependency=}")
+
+    name, version = split
+    return f'{name} = "{version}"'
+
+
+def process_dependencies(deps: str) -> str:
+    """
+    >>> process_dependencies(' ')
+    ''
+    >>> process_dependencies("pytest matplotlib@~3.7 black@!=1.2.3")
+    'pytest = "*"\\nmatplotlib = "~3.7"\\nblack = "!=1.2.3"\\n'
+    """
+    if not deps.strip():
+        return ""
+
+    return "\n".join(map(process_dependency, deps.split())) + "\n"
+
+
 def update_dependencies() -> None:
+    # Extra space and .strip() avoids accidentally creating """"
+    dependencies = process_dependencies("""{cookiecutter.poetry_dependencies}} """.strip())
+    dev_dependencies = process_dependencies("""{{cookiecutter.poetry_dev_dependencies}} """.strip())
+
     with open("pyproject.toml") as f:
         # Extra space and .strip() prevents issues with quotes
         contents = (
             f.read()
-            .replace("{poetry_dependencies}\n", """{{cookiecutter.poetry_dependencies}} """.strip())
-            .replace(
-                "{poetry_dev_dependencies}\n",
-                """{{cookiecutter.poetry_dev_dependencies}} """.strip(),
-            )
+            .replace("{poetry_dependencies}\n", dependencies)
+            .replace("{poetry_dev_dependencies}\n", dev_dependencies)
         )
     with open("pyproject.toml", "w") as f:
         f.write(contents)
