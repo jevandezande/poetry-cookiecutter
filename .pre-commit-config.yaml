@@ -23,3 +23,11 @@ repos:
     entry: poetry run mypy
     types: [python]
     require_serial: true
+
+  - id: pytest
+    name: pytest
+    stages: [commit, push]
+    language: system
+    entry: poetry run pytest --cov
+    types: [python]
+    pass_filenames: false

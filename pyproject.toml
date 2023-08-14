@@ -40,6 +40,11 @@ files = ["hooks"]
 strict = true
 pretty = true
 
+[tool.pytest.ini_options]
+testpaths = ["hooks"]
+addopts = "--doctest-modules"
+doctest_optionflags = "NORMALIZE_WHITESPACE"
+
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
