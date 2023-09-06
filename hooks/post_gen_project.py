@@ -106,7 +106,7 @@ def process_dependencies(deps: str) -> str:
 
 def update_dependencies() -> None:
     # Extra space and .strip() avoids accidentally creating """"
-    dependencies = process_dependencies("""{cookiecutter.poetry_dependencies}} """.strip())
+    dependencies = process_dependencies("""{{cookiecutter.poetry_dependencies}} """.strip())
     dev_dependencies = process_dependencies("""{{cookiecutter.poetry_dev_dependencies}} """.strip())
 
     with open("pyproject.toml") as f:
