@@ -7,6 +7,6 @@
     "poetry_dependencies": "",
     "poetry_dev_dependencies": "",
     "line_length": "100",
-    "license": "MIT",
+    "license": ["MIT", "APL-2.0", "BSD-3-clause", "MPL-2.0", "None"],
     "_copy_without_render": [".github/workflows"]
 }
