@@ -142,6 +142,17 @@ def git_add_remote(name: str, url: str, protocol: PROTOCOL = "git") -> None:
     call(f"git remote add {name} {url}")
 
 
+def github_setup(privacy: str) -> None:
+    """
+    Make a repository on GitHub (requires GitHub CLI)
+    """
+    privacy_options = ["private", "internal", "public"]
+    if privacy not in privacy_options:
+        raise ValueError(f"Privacy must be one of {privacy_options}, got: {privacy}")
+
+    call(f"gh repo create {{cookiecutter.package_name}} --{privacy}")
+
+
 SUCCESS = "\x1b[1;32m"
 TERMINATOR = "\x1b[0m"
 
@@ -156,6 +167,9 @@ def main() -> None:
     git_hooks()
     git_initial_commit()
     git_add_remote("origin", "{{cookiecutter.project_url}}")
+
+    if "{{cookiecutter.github_setup}}" != "None":  # type: ignore
+        github_setup("{{cookiecutter.github_setup}}")
 
     print(f"{SUCCESS}Project successfully initialized{TERMINATOR}")
 
