@@ -45,3 +45,5 @@ default settings and save it as a `.cookiecutterrc` or use it directly via:
 `--config-file cookiecutter.yml`
 
 Install [act](https://github.com/nektos/act) to run GitHub Actions locally.
+
+Read [notes](notes.md) for more tips.

@@ -13,10 +13,9 @@ python = "^{python_version}"
 {poetry_dependencies}
 
 [tool.poetry.group.dev.dependencies]
-black = "==23.7"
 mypy = "*"
 pre-commit = "*"
-ruff = "*"
+ruff = ">=0.1.3"
 {poetry_dev_dependencies}
 
 [tool.poetry.group.test.dependencies]
@@ -24,10 +23,6 @@ pytest = "*"
 pytest-cov = "*"
 
 [tool.poetry.scripts]
-
-[tool.black]
-line-length = {{cookiecutter.line_length}}
-target-version = ["py311"]
 
 [tool.ruff]
 line-length = {{cookiecutter.line_length}}
