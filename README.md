@@ -1,14 +1,14 @@
 # Poetry Cookiecutter
 [![License](https://img.shields.io/github/license/jevandezande/poetry-cookiecutter)](https://github.com/jevandezande/poetry-cookiecutter/blob/master/LICENSE)
-[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
-[![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/jevandezande/poetry-cookiecutter/test.yml?branch=master)](https://github.com/jevandezande/poetry-cookiecutter/actions/)
+[![Code style: ruff](https://img.shields.io/badge/code%20style-ruff-000000.svg)](https://github.com/astral-sh/ruff)
+[![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/jevandezande/poetry-cookiecutter/test.yml?branch=master&logo=github-actions)](https://github.com/jevandezande/poetry-cookiecutter/actions/)
+[![Codecov](https://img.shields.io/codecov/c/github/jevandezande/poetry-cookiecutter)](https://app.codecov.io/github/jevandezande/poetry-cookiecutter)
 
 [Cookiecutter](https://github.com/audreyr/cookiecutter) for setting up [poetry](https://python-poetry.org/) projects with all of the below features.
 
 ## Features
 - Packaging with [poetry](https://python-poetry.org/)
-- Formatting with [black](https://black.readthedocs.io/en/stable/)
-- Linting with [ruff](https://github.com/charliermarsh/ruff)
+- Formatting and linting with [ruff](https://github.com/charliermarsh/ruff)
 - Static typing with [mypy](http://mypy-lang.org/)
 - Testing with [pytest](https://docs.pytest.org/en/latest/)
 - Git hooks that run all the above with [pre-commit](https://pre-commit.com/)
