@@ -4,7 +4,7 @@ description = "Cookiecutter for setting up python projects with poetry that just
 authors = ["Jonathon Vandezande"]
 license = "MIT"
 readme = "README.md"
-version = "0.2.0"
+version = "0.3.0"
 keywords = ["cookiecutter", "poetry"]
 repository = "https://github.com/jevandezande/poetry-cookiecutter"
 
