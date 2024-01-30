@@ -1,11 +1,11 @@
 import logging
 import shutil
+import subprocess
 import sys
 from datetime import datetime
 from pathlib import Path
 from shutil import rmtree
-from subprocess import check_call
-from typing import Literal
+from typing import Any, Literal
 
 logger = logging.Logger("post_gen_project_logger")
 logger.setLevel(logging.INFO)
@@ -14,14 +14,14 @@ logger.setLevel(logging.INFO)
 PROTOCOL = Literal["git", "https"]
 
 
-def call(*inputs: str) -> None:
+def call(*inputs: str, **kwargs: Any) -> None:
     """
     Call shell commands.
     Warning: strings with spaces are not yet supported.
     """
     for input in inputs:
         logger.debug(f"Calling: {input}")
-        check_call(input.split())
+        subprocess.check_call(input.split(), **kwargs)
 
 
 def set_python_version() -> None:
@@ -127,7 +127,10 @@ def install() -> None:
 
 
 def git_hooks() -> None:
-    call("poetry run pre-commit install -t pre-commit", "poetry run pre-commit install -t pre-push")
+    call(
+        "poetry run pre-commit install -t pre-commit",
+        "poetry run pre-commit install -t pre-push",
+    )
 
 
 def git_initial_commit() -> None:
@@ -149,6 +152,13 @@ def github_setup(privacy: str) -> None:
     privacy_options = ["private", "internal", "public"]
     if privacy not in privacy_options:
         raise ValueError(f"Privacy must be one of {privacy_options}, got: {privacy}")
+
+    try:
+        call("gh", stdout=subprocess.DEVNULL)
+    except FileNotFoundError:
+        raise OSError("The GitHub CLI is not installed; install from https://cli.github.com/")
+    except subprocess.CalledProcessError:
+        raise OSError("Issue with GitHub CLI encountered")
 
     call(f"gh repo create {{cookiecutter.package_name}} --{privacy}")
 

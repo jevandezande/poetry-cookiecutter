@@ -37,6 +37,7 @@ The cookiecutter will automagically
 - Install dependencies
 - Setup pre-commit and pre-push hooks
 - Make initial commit
+- Setup remote on GitHub (optional)
 
 
 ## Recommendations
