@@ -4,18 +4,18 @@ description = "Cookiecutter for setting up python projects with poetry that just
 authors = ["Jonathon Vandezande"]
 license = "MIT"
 readme = "README.md"
-version = "0.3.0"
+version = "0.4.0"
 keywords = ["cookiecutter", "poetry"]
 repository = "https://github.com/jevandezande/poetry-cookiecutter"
 
 [tool.poetry.dependencies]
-python = ">=3.11"
+python = ">=3.12"
 cookiecutter = "*"
 
 [tool.poetry.group.dev.dependencies]
 mypy = "*"
 pre-commit = "*"
-ruff = ">=0.2.0"
+ruff = ">=0.3.0"
 
 [tool.poetry.group.test.dependencies]
 pytest = "*"

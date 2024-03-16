@@ -15,7 +15,7 @@ python = "^{python_version}"
 [tool.poetry.group.dev.dependencies]
 mypy = "*"
 pre-commit = "*"
-ruff = ">=0.2.0"
+ruff = ">=0.3.0"
 {poetry_dev_dependencies}
 
 [tool.poetry.group.test.dependencies]
