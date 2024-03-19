@@ -12,6 +12,7 @@ logger.setLevel(logging.INFO)
 
 
 PROTOCOL = Literal["git", "https"]
+GITHUB_PRIVACY_OPTIONS = ["private", "internal", "public"]
 
 
 def call(*inputs: str, **kwargs: Any) -> None:
@@ -25,6 +26,9 @@ def call(*inputs: str, **kwargs: Any) -> None:
 
 
 def set_python_version() -> None:
+    """
+    Set the python version in pyproject.toml and .github/workflows/test.yml
+    """
     python_version = f"{sys.version_info.major}.{sys.version_info.minor}"
     logger.info(f"Settting {python_version=}")
     if sys.version_info.minor < 9:
@@ -43,6 +47,11 @@ def set_python_version() -> None:
 
 
 def set_license(license: str | None = "MIT") -> None:
+    """
+    Copy the licese file to LICENSE (if any)
+
+    :param license: name of the license (or None for no license)
+    """
     if not license or license == "None":
         logger.debug("No license set")
         return
@@ -73,6 +82,8 @@ def git_init() -> None:
 
 def process_dependency(dependency: str) -> str:
     """
+    Process a poetry format dependency
+
     >>> process_dependency("pytest")
     'pytest = "*"'
     >>> process_dependency("matplotlib@^3.7.2")
@@ -93,6 +104,8 @@ def process_dependency(dependency: str) -> str:
 
 def process_dependencies(deps: str) -> str:
     """
+    Process a space separated list of poetry format dependencies
+
     >>> process_dependencies(' ')
     ''
     >>> process_dependencies("pytest matplotlib@~3.7 black@!=1.2.3")
@@ -105,6 +118,9 @@ def process_dependencies(deps: str) -> str:
 
 
 def update_dependencies() -> None:
+    """
+    Add and update the dependencies in pyproject.toml and poetry.lock
+    """
     # Extra space and .strip() avoids accidentally creating """"
     dependencies = process_dependencies("""{{cookiecutter.poetry_dependencies}} """.strip())
     dev_dependencies = process_dependencies("""{{cookiecutter.poetry_dev_dependencies}} """.strip())
@@ -123,10 +139,16 @@ def update_dependencies() -> None:
 
 
 def install() -> None:
+    """
+    Install dependencies
+    """
     call("poetry install")
 
 
 def git_hooks() -> None:
+    """
+    Install pre-commit and pre-push hooks
+    """
     call(
         "poetry run pre-commit install -t pre-commit",
         "poetry run pre-commit install -t pre-push",
@@ -134,10 +156,20 @@ def git_hooks() -> None:
 
 
 def git_initial_commit() -> None:
+    """
+    Make the initial commit
+    """
     call("git add .", "git commit -m Setup")
 
 
 def git_add_remote(name: str, url: str, protocol: PROTOCOL = "git") -> None:
+    """
+    Add a remote to the git repository
+
+    :param name: name for the remote
+    :param url: url of remote
+    :param protocol: protocol of the remote ("git" or "https")
+    """
     if protocol == "git":
         _, _, hostname, path = url.split("/", 3)
         url = f"{protocol}@{hostname}:{path}"
@@ -148,10 +180,11 @@ def git_add_remote(name: str, url: str, protocol: PROTOCOL = "git") -> None:
 def github_setup(privacy: str) -> None:
     """
     Make a repository on GitHub (requires GitHub CLI)
+
+    :param privacy: privacy of the repository ("private", "internal", "public")
     """
-    privacy_options = ["private", "internal", "public"]
-    if privacy not in privacy_options:
-        raise ValueError(f"Privacy must be one of {privacy_options}, got: {privacy}")
+    if privacy not in GITHUB_PRIVACY_OPTIONS:
+        raise ValueError(f"{privacy=} not in {GITHUB_PRIVACY_OPTIONS}")
 
     try:
         call("gh", stdout=subprocess.DEVNULL)
