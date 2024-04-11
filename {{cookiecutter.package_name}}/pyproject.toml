@@ -9,7 +9,7 @@ readme = "README.md"
 repository = "{{cookiecutter.project_url}}"
 
 [tool.poetry.dependencies]
-python = "^{python_version}"
+python = ">={python_version}"
 {poetry_dependencies}
 
 [tool.poetry.group.dev.dependencies]
