@@ -15,25 +15,30 @@ cookiecutter = "*"
 [tool.poetry.group.dev.dependencies]
 mypy = "*"
 pre-commit = "*"
-ruff = ">=0.3.0"
+ruff = ">=0.4"
 
 [tool.poetry.group.test.dependencies]
 pytest = "*"
 pytest-cov = "*"
 
 [tool.ruff]
-exclude = ["\\{\\{cookiecutter.package_name\\}\\}"]
+extend-exclude = ["\\{\\{cookiecutter.package_name\\}\\}"]
 line-length = 100
 
 [tool.ruff.lint]
 select = [
+    "D",  # pydocstyle
     "E",  # pycodestyle errors
-    "W",  # pycodestyle warnings
     "F",  # pyflakes
     "I",  # isort
+    "W",  # pycodestyle warnings
 ]
 
+[tool.ruff.lint.pydocstyle]
+convention = "numpy"
+
 [tool.mypy]
+exclude = "\\{\\{cookiecutter.package_name\\}\\}"
 files = ["hooks"]
 strict = true
 pretty = true

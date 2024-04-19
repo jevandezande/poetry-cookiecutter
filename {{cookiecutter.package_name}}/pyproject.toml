@@ -15,7 +15,7 @@ python = ">={python_version}"
 [tool.poetry.group.dev.dependencies]
 mypy = "*"
 pre-commit = "*"
-ruff = ">=0.3.0"
+ruff = ">=0.4"
 {poetry_dev_dependencies}
 
 [tool.poetry.group.test.dependencies]
@@ -29,11 +29,15 @@ line-length = {{cookiecutter.line_length}}
 
 [tool.ruff.lint]
 select = [
+    "D",  # pydocstyle
     "E",  # pycodestyle errors
-    "W",  # pycodestyle warnings
     "F",  # pyflakes
     "I",  # isort
+    "W",  # pycodestyle warnings
 ]
+
+[tool.ruff.lint.pydocstyle]
+convention = "numpy"
 
 [tool.mypy]
 files = ["{{cookiecutter.package_name}}", "tests"]

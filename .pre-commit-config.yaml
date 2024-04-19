@@ -5,24 +5,16 @@ repos:
     name: ruff-format
     stages: [commit]
     language: system
-    entry: poetry run ruff format .
+    entry: poetry run ruff format . --config pyproject.toml
     types: [python]
 
   - id: ruff
     name: ruff-check
     stages: [commit]
     language: system
-    entry: poetry run ruff check . --fix
+    entry: poetry run ruff check hooks --fix --config pyproject.toml
     types: [python]
     exclude: setup.py
-
-  - id: mypy
-    name: mypy
-    stages: [commit]
-    language: system
-    entry: poetry run mypy
-    types: [python]
-    require_serial: true
 
   - id: pytest
     name: pytest
@@ -31,3 +23,10 @@ repos:
     entry: poetry run pytest --cov
     types: [python]
     pass_filenames: false
+
+- repo: https://github.com/pre-commit/mirrors-mypy
+  rev: v1.9.0
+  hooks:
+    - id: mypy
+      args: ['--config-file', 'pyproject.toml']
+      exclude: '\{\{cookiecutter.package_name\}\}'

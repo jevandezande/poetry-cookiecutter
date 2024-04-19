@@ -1,3 +1,5 @@
+"""Hooks for setting up project once generated."""
+
 import logging
 import shutil
 import subprocess
@@ -18,6 +20,7 @@ GITHUB_PRIVACY_OPTIONS = ["private", "internal", "public"]
 def call(*inputs: str, **kwargs: Any) -> None:
     """
     Call shell commands.
+
     Warning: strings with spaces are not yet supported.
     """
     for input in inputs:
@@ -26,9 +29,7 @@ def call(*inputs: str, **kwargs: Any) -> None:
 
 
 def set_python_version() -> None:
-    """
-    Set the python version in pyproject.toml and .github/workflows/test.yml
-    """
+    """Set the python version in pyproject.toml and .github/workflows/test.yml."""
     python_version = f"{sys.version_info.major}.{sys.version_info.minor}"
     logger.info(f"Settting {python_version=}")
     if sys.version_info.minor < 9:
@@ -48,7 +49,7 @@ def set_python_version() -> None:
 
 def set_license(license: str | None = "MIT") -> None:
     """
-    Copy the licese file to LICENSE (if any)
+    Copy the licese file to LICENSE (if any).
 
     :param license: name of the license (or None for no license)
     """
@@ -73,16 +74,18 @@ def set_license(license: str | None = "MIT") -> None:
 
 
 def remove_license_dir() -> None:
+    """Remove the licenses directory."""
     rmtree("licenses")
 
 
 def git_init() -> None:
+    """Initialize a git repository."""
     call("git init")
 
 
 def process_dependency(dependency: str) -> str:
     """
-    Process a poetry format dependency
+    Process a poetry format dependency.
 
     >>> process_dependency("pytest")
     'pytest = "*"'
@@ -103,13 +106,13 @@ def process_dependency(dependency: str) -> str:
 
 
 def process_dependencies(deps: str) -> str:
-    """
-    Process a space separated list of poetry format dependencies
+    r"""
+    Process a space separated list of poetry format dependencies.
 
     >>> process_dependencies(' ')
     ''
     >>> process_dependencies("pytest matplotlib@~3.7 black@!=1.2.3")
-    'pytest = "*"\\nmatplotlib = "~3.7"\\nblack = "!=1.2.3"\\n'
+    'pytest = "*"\nmatplotlib = "~3.7"\nblack = "!=1.2.3"\n'
     """
     if not deps.strip():
         return ""
@@ -118,9 +121,7 @@ def process_dependencies(deps: str) -> str:
 
 
 def update_dependencies() -> None:
-    """
-    Add and update the dependencies in pyproject.toml and poetry.lock
-    """
+    """Add and update the dependencies in pyproject.toml and poetry.lock."""
     # Extra space and .strip() avoids accidentally creating """"
     dependencies = process_dependencies("""{{cookiecutter.poetry_dependencies}} """.strip())
     dev_dependencies = process_dependencies("""{{cookiecutter.poetry_dev_dependencies}} """.strip())
@@ -139,16 +140,12 @@ def update_dependencies() -> None:
 
 
 def install() -> None:
-    """
-    Install dependencies
-    """
+    """Install dependencies."""
     call("poetry install")
 
 
 def git_hooks() -> None:
-    """
-    Install pre-commit and pre-push hooks
-    """
+    """Install pre-commit and pre-push hooks."""
     call(
         "poetry run pre-commit install -t pre-commit",
         "poetry run pre-commit install -t pre-push",
@@ -156,15 +153,13 @@ def git_hooks() -> None:
 
 
 def git_initial_commit() -> None:
-    """
-    Make the initial commit
-    """
+    """Make the initial commit."""
     call("git add .", "git commit -m Setup")
 
 
 def git_add_remote(name: str, url: str, protocol: PROTOCOL = "git") -> None:
     """
-    Add a remote to the git repository
+    Add a remote to the git repository.
 
     :param name: name for the remote
     :param url: url of remote
@@ -179,7 +174,7 @@ def git_add_remote(name: str, url: str, protocol: PROTOCOL = "git") -> None:
 
 def github_setup(privacy: str) -> None:
     """
-    Make a repository on GitHub (requires GitHub CLI)
+    Make a repository on GitHub (requires GitHub CLI).
 
     :param privacy: privacy of the repository ("private", "internal", "public")
     """
@@ -201,6 +196,7 @@ TERMINATOR = "\x1b[0m"
 
 
 def main() -> None:
+    """Run the post generation hooks."""
     set_python_version()
     set_license("{{cookiecutter.license}}")
     remove_license_dir()
