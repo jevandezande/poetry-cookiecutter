@@ -191,6 +191,18 @@ def github_setup(privacy: str) -> None:
     call(f"gh repo create {{cookiecutter.package_name}} --{privacy}")
 
 
+def notes() -> None:
+    """Print notes for the user."""
+    print(
+        """
+If using GitHub, generate a CODECOV_TOKEN at:
+https://app.codecov.io/gh/{{cookiecutter.github_username}}/{{cookiecutter.package_name}}/settings
+and add it to the GitHub repository secrets as CODECOV_TOKEN at:
+https://github.com/{{cookiecutter.github_username}}/{{cookiecutter.package_name}}/settings/secrets/actions
+"""
+    )
+
+
 SUCCESS = "\x1b[1;32m"
 TERMINATOR = "\x1b[0m"
 
@@ -209,6 +221,8 @@ def main() -> None:
 
     if "{{cookiecutter.github_setup}}" != "None":  # type: ignore
         github_setup("{{cookiecutter.github_setup}}")
+
+    notes()
 
     print(f"{SUCCESS}Project successfully initialized{TERMINATOR}")
 
