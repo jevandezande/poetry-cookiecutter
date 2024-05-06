@@ -21,6 +21,9 @@ def call(*inputs: str, **kwargs: Any) -> None:
     """
     Call shell commands.
 
+    :param inputs: commands to call
+    :param kwargs: keyword arguments to pass to subprocess.check_call
+
     Warning: strings with spaces are not yet supported.
     """
     for input in inputs:
@@ -87,10 +90,20 @@ def process_dependency(dependency: str) -> str:
     """
     Process a poetry format dependency.
 
+    :param dependency: dependency to process
+
     >>> process_dependency("pytest")
     'pytest = "*"'
     >>> process_dependency("matplotlib@^3.7.2")
     'matplotlib = "^3.7.2"'
+    >>> process_dependency("")
+    Traceback (most recent call last):
+    ...
+    ValueError: Blank dependency
+    >>> process_dependency("hello@1.2.3@v40")
+    Traceback (most recent call last):
+    ...
+    ValueError: Unable to process dependency='hello@1.2.3@v40'
     """
     if not dependency:
         raise ValueError("Blank dependency")
@@ -109,6 +122,8 @@ def process_dependencies(deps: str) -> str:
     r"""
     Process a space separated list of poetry format dependencies.
 
+    :param deps: dependencies to process
+
     >>> process_dependencies(' ')
     ''
     >>> process_dependencies("pytest matplotlib@~3.7 black@!=1.2.3")
@@ -122,12 +137,11 @@ def process_dependencies(deps: str) -> str:
 
 def update_dependencies() -> None:
     """Add and update the dependencies in pyproject.toml and poetry.lock."""
-    # Extra space and .strip() avoids accidentally creating """"
+    # Extra space and .strip() avoids accidentally creating '""""'
     dependencies = process_dependencies("""{{cookiecutter.poetry_dependencies}} """.strip())
     dev_dependencies = process_dependencies("""{{cookiecutter.poetry_dev_dependencies}} """.strip())
 
     with open("pyproject.toml") as f:
-        # Extra space and .strip() prevents issues with quotes
         contents = (
             f.read()
             .replace("{poetry_dependencies}\n", dependencies)
