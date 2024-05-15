@@ -160,10 +160,7 @@ def install() -> None:
 
 def git_hooks() -> None:
     """Install pre-commit and pre-push hooks."""
-    call(
-        "poetry run pre-commit install -t pre-commit",
-        "poetry run pre-commit install -t pre-push",
-    )
+    call("poetry run pre-commit install")
 
 
 def git_initial_commit() -> None:
