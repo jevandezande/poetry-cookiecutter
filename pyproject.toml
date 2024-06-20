@@ -4,7 +4,7 @@ description = "Cookiecutter for setting up python projects with poetry that just
 authors = ["Jonathon Vandezande"]
 license = "MIT"
 readme = "README.md"
-version = "0.4.0"
+version = "0.5.0"
 keywords = ["cookiecutter", "poetry"]
 repository = "https://github.com/jevandezande/poetry-cookiecutter"
 
@@ -33,6 +33,9 @@ select = [
     "I",  # isort
     "W",  # pycodestyle warnings
 ]
+
+[tool.ruff.lint.per-file-ignores]
+"__init__.py" = ["F401", "F403"]
 
 [tool.ruff.lint.pydocstyle]
 convention = "numpy"
