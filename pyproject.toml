@@ -7,6 +7,7 @@ readme = "README.md"
 version = "0.5.0"
 keywords = ["cookiecutter", "poetry"]
 repository = "https://github.com/jevandezande/poetry-cookiecutter"
+package-mode = false
 
 [tool.poetry.dependencies]
 python = ">=3.12"
