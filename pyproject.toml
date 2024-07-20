@@ -15,7 +15,7 @@ cookiecutter = "*"
 [tool.poetry.group.dev.dependencies]
 mypy = "*"
 pre-commit = "*"
-ruff = ">=0.4"
+ruff = ">=0.5"
 
 [tool.poetry.group.test.dependencies]
 pytest = "*"

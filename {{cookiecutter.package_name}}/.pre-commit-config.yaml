@@ -1,33 +1,36 @@
 repos:
+- repo: https://github.com/pre-commit/pre-commit-hooks
+  rev: v4.6.0  # this is optional, use `pre-commit autoupdate` to get the latest rev!
+  hooks:
+    - id: check-yaml
+    - id: end-of-file-fixer
+    - id: trailing-whitespace
+
+- repo: https://github.com/pre-commit/mirrors-mypy
+  rev: v1.11.0
+  hooks:
+    - id: mypy
+      stages: [commit, push]
+      args: ['--config-file', 'pyproject.toml']
+      exclude: '\{\{cookiecutter.package_name\}\}'
+
+- repo: https://github.com/astral-sh/ruff-pre-commit
+  rev: v0.5.3
+  hooks:
+    # Run the linter
+    - id: ruff
+      args: [ --fix ]
+      exclude: '\{\{cookiecutter.package_name\}\}'
+    # Run the formatter
+    - id: ruff-format
+      exclude: '\{\{cookiecutter.package_name\}\}'
+
 - repo: local
   hooks:
-  - id: ruff
-    name: ruff-format
-    stages: [commit]
-    language: system
-    entry: poetry run ruff format .
-    types: [python]
-
-  - id: ruff
-    name: ruff-check
-    stages: [commit]
-    language: system
-    entry: poetry run ruff check . --fix
-    types: [python]
-    exclude: setup.py
-
-  - id: mypy
-    name: mypy
-    stages: [commit]
-    language: system
-    entry: poetry run mypy
-    types: [python]
-    require_serial: true
-
-  - id: pytest
-    name: pytest
-    stages: [commit, push]
-    language: system
-    entry: poetry run pytest --cov
-    types: [python]
-    pass_filenames: false
+    - id: pytest
+      name: pytest
+      stages: [commit, push]
+      language: system
+      entry: poetry run pytest --cov
+      types: [python]
+      pass_filenames: false
