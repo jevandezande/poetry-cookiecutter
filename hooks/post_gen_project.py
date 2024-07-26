@@ -183,7 +183,7 @@ def git_add_remote(name: str, url: str, protocol: PROTOCOL = "git") -> None:
     call(f"git remote add {name} {url}")
 
 
-def github_setup(privacy: str) -> None:
+def github_setup(privacy: str, remote_name: str) -> None:
     """
     Make a repository on GitHub (requires GitHub CLI).
 
@@ -199,7 +199,8 @@ def github_setup(privacy: str) -> None:
     except subprocess.CalledProcessError:
         raise OSError("Issue with GitHub CLI encountered")
 
-    call(f"gh repo create {{cookiecutter.package_name}} --{privacy}")
+    call(f"gh repo create {{cookiecutter.package_name}} --{privacy} --remote {remote_name}")
+    call(f"git branch --set-upstream-to={remote_name} master")
 
 
 def notes() -> None:
@@ -231,7 +232,7 @@ def main() -> None:
     git_add_remote("origin", "{{cookiecutter.project_url}}")
 
     if "{{cookiecutter.github_setup}}" != "None":  # type: ignore
-        github_setup("{{cookiecutter.github_setup}}")
+        github_setup("{{cookiecutter.github_setup}}", "origin")
 
     notes()
 
