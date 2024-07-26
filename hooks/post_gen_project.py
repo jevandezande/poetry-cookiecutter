@@ -231,7 +231,7 @@ def main() -> None:
     git_initial_commit()
     git_add_remote("origin", "{{cookiecutter.project_url}}")
 
-    if "{{cookiecutter.github_setup}}" != "None":  # type: ignore
+    if "{{cookiecutter.github_setup}}" != "None":  # type: ignore [comparison-overlap]
         github_setup("{{cookiecutter.github_setup}}", "origin")
 
     notes()
