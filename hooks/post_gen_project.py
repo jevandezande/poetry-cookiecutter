@@ -168,11 +168,11 @@ def git_initial_commit() -> None:
     call("git add .", "git commit -m Setup")
 
 
-def git_add_remote(name: str, url: str, protocol: PROTOCOL = "git") -> None:
+def git_add_remote(remote: str, url: str, protocol: PROTOCOL = "git") -> None:
     """
     Add a remote to the git repository.
 
-    :param name: name for the remote
+    :param remote: name for the remote
     :param url: url of remote
     :param protocol: protocol of the remote ("git" or "https")
     """
@@ -180,10 +180,10 @@ def git_add_remote(name: str, url: str, protocol: PROTOCOL = "git") -> None:
         _, _, hostname, path = url.split("/", 3)
         url = f"{protocol}@{hostname}:{path}"
 
-    call(f"git remote add {name} {url}")
+    call(f"git remote add {remote} {url}")
 
 
-def github_setup(privacy: str, remote_name: str) -> None:
+def github_setup(privacy: str, remote: str) -> None:
     """
     Make a repository on GitHub (requires GitHub CLI).
 
@@ -199,8 +199,8 @@ def github_setup(privacy: str, remote_name: str) -> None:
     except subprocess.CalledProcessError:
         raise OSError("Issue with GitHub CLI encountered")
 
-    call(f"gh repo create {{cookiecutter.package_name}} --{privacy} --remote {remote_name}")
-    call(f"git branch --set-upstream-to={remote_name} master")
+    call(f"gh repo create {{cookiecutter.package_name}} --{privacy} --remote {remote} --source .")
+    call(f"git branch --set-upstream-to={remote} master")
 
 
 def notes() -> None:
