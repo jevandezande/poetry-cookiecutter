@@ -15,6 +15,7 @@ logger.setLevel(logging.INFO)
 
 PROTOCOL = Literal["git", "https"]
 GITHUB_PRIVACY_OPTIONS = ["private", "internal", "public"]
+MINUMUM_PYTHON_MINOR_VERSION = 12
 
 
 def call(*inputs: str, **kwargs: Any) -> None:
@@ -35,7 +36,7 @@ def set_python_version() -> None:
     """Set the python version in pyproject.toml and .github/workflows/test.yml."""
     python_version = f"{sys.version_info.major}.{sys.version_info.minor}"
     logger.info(f"Settting {python_version=}")
-    if sys.version_info.minor < 9:
+    if sys.version_info.minor < MINUMUM_PYTHON_MINOR_VERSION:
         logger.warn(f"{python_version=} should be upgraded to the latest avaiable python version.")
 
     file_names = [
@@ -108,14 +109,13 @@ def process_dependency(dependency: str) -> str:
     if not dependency:
         raise ValueError("Blank dependency")
 
-    if len(split := dependency.split("@")) == 1:
-        return f'{dependency} = "*"'
-
-    if len(split) != 2:
-        raise ValueError(f"Unable to process {dependency=}")
-
-    name, version = split
-    return f'{name} = "{version}"'
+    match dependency.split("@"):
+        case [package]:
+            return f'{package} = "*"'
+        case [package, version]:
+            return f'{package} = "{version}"'
+        case _:
+            raise ValueError(f"Unable to process {dependency=}")
 
 
 def process_dependencies(deps: str) -> str:
@@ -194,10 +194,12 @@ def github_setup(privacy: str, remote: str) -> None:
 
     try:
         call("gh", stdout=subprocess.DEVNULL)
-    except FileNotFoundError:
-        raise OSError("The GitHub CLI is not installed; install from https://cli.github.com/")
-    except subprocess.CalledProcessError:
-        raise OSError("Issue with GitHub CLI encountered")
+    except FileNotFoundError as e:
+        raise OSError(
+            "The GitHub CLI is not installed; install from https://cli.github.com/"
+        ) from e
+    except subprocess.CalledProcessError as e:
+        raise OSError("Issue with GitHub CLI encountered") from e
 
     call(f"gh repo create {{cookiecutter.package_name}} --{privacy} --remote {remote} --source .")
     call(f"git branch --set-upstream-to={remote} master")
@@ -231,7 +233,7 @@ def main() -> None:
     git_initial_commit()
     git_add_remote("origin", "{{cookiecutter.project_url}}")
 
-    if "{{cookiecutter.github_setup}}" != "None":  # type: ignore [comparison-overlap]
+    if "{{cookiecutter.github_setup}}" != "None":  # type: ignore [comparison-overlap]  # noqa: PLR0133
         github_setup("{{cookiecutter.github_setup}}", "origin")
 
     notes()

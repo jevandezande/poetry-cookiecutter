@@ -22,8 +22,10 @@ repos:
     # Run the linter
     - id: ruff
       args: [ --fix ]
+      exclude: '\{\{cookiecutter.package_name\}\}/'
     # Run the formatter
     - id: ruff-format
+      exclude: '\{\{cookiecutter.package_name\}\}/'
 
 - repo: local
   hooks:
