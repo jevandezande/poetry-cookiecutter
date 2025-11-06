@@ -6,6 +6,12 @@
 
 [Cookiecutter](https://github.com/audreyr/cookiecutter) for setting up [poetry](https://python-poetry.org/) projects with all of the below features.
 
+# Deprecation warning
+
+This project is deprecated in favor of using `pixi` or `uv` for package management.
+See [jevandezande/pixi-cookiecutter](https://github.com/jevandezande/pixi-cookiecutter) and [jevandezande/uv-cookiecutter](https://github.com/jevandezande/uv-cookiecutter)
+
+
 ## Features
 - Packaging with [poetry](https://python-poetry.org/)
 - Formatting and linting with [ruff](https://github.com/charliermarsh/ruff)
